@@ -190,6 +190,20 @@ let bioCollectionsTests  =
                     testCompVec
                     "BioArray.toCompositionVector did not return correct vector"
             )
+
+            testCase "toRelCompositionVector" (fun () ->
+                let testRelCompVec = Array.zeroCreate 26
+                let metIndex = 12 // Value of (int(BioItem.symbol Met)) - 65
+                let valIndex = 21 // Value of (int(BioItem.symbol Val)) - 65
+                let leuIndex = 11 // Value of (int(BioItem.symbol Leu)) - 65
+                testRelCompVec.[metIndex] <- testRelCompVec.[metIndex] + float 1/ float 3
+                testRelCompVec.[valIndex] <- testRelCompVec.[valIndex] + float 1/ float 3
+                testRelCompVec.[leuIndex] <- testRelCompVec.[leuIndex] + float 1/ float 3
+                Expect.equal
+                    (testProt |> BioArray.toRelCompositionVector)
+                    testRelCompVec
+                    "BioArray.toRelCompositionVector did not return correct vector"
+            )
         ]
 
         testList "BioList" [
